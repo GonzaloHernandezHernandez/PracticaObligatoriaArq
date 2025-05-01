@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Monitores</h1>
+
+<a href="{% url 'crear_monitor' %}">Nuevo Monitor</a>
+
+<ul>
+    {% for monitor in monitores %}
+        <li><a href="{% url 'detalle_monitor' monitor.id %}">{{ monitor.nombre }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Salas</h1>
+
+<a href="{% url 'crear_sala' %}">Nueva Sala</a>
+
+<ul>
+    {% for sala in salas %}
+        <li><a href="{% url 'detalle_sala' sala.id %}">{{ sala.nombre }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

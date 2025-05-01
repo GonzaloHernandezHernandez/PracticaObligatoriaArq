@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ actividad.nombre }}</h2>
+<p>{{ actividad.descripcion }}</p>
+<p>Tipo: {{ actividad.tipo }}</p>
+<p>Horario: {{ actividad.horario }}</p>
+<p>Duración: {{ actividad.duracion }} min</p>
+<p>Plazas: {{ actividad.plazas_disponibles }}</p>
+
+<a href="{% url 'editar_actividad' actividad.id %}">Editar</a> |
+<a href="{% url 'eliminar_actividad' actividad.id %}">Eliminar</a>
+{% endblock %}

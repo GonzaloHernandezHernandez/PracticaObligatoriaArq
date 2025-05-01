@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Actividades{% endblock %}
+{% block content %}
+<h1>Listado de Actividades</h1>
+
+<form method="get">
+    <input type="text" name="tipo" placeholder="Tipo de actividad" value="{{ request.GET.tipo }}">
+    
+    <select name="monitor">
+        <option value="">-- Filtrar por monitor --</option>
+        {% for monitor in monitores %}
+            <option value="{{ monitor.id }}" {% if request.GET.monitor == monitor.id|stringformat:"s" %}selected{% endif %}>
+                {{ monitor.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<a href="{% url 'crear_actividad' %}">Crear nueva actividad</a>
+
+<ul>
+    {% for actividad in actividades %}
+        <li><a href="{% url 'detalle_actividad' actividad.id %}">{{ actividad.nombre }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

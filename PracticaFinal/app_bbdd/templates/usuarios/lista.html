@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Usuarios Inscritos</h1>
+
+<form method="get">
+    <label>Filtrar por actividad:</label>
+    <select name="actividad">
+        <option value="">-- Todas --</option>
+        {% for actividad in actividades %}
+            <option value="{{ actividad.id }}" {% if request.GET.actividad == actividad.id|stringformat:"s" %}selected{% endif %}>
+                {{ actividad.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+<a href="{% url 'crear_usuario' %}">Nuevo Usuario</a>
+
+<ul>
+    {% for usuario in usuarios %}
+        <li><a href="{% url 'detalle_usuario' usuario.id %}">{{ usuario.nombre }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

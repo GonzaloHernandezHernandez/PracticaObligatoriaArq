@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Monitor: {{ monitor.nombre }}</h2>
+<p>Especialización: {{ monitor.especializacion }}</p>
+<p>Actividades asignadas: {{ monitor.numero_actividades_asignadas }}</p>
+
+<a href="{% url 'editar_monitor' monitor.id %}">Editar</a> |
+<a href="{% url 'eliminar_monitor' monitor.id %}">Eliminar</a>
+{% endblock %}

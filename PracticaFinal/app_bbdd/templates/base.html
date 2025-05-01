@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Centro Cultural{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="/actividades/">Actividades</a> |
+        <a href="/usuarios/">Usuarios</a> |
+        <a href="/monitores/">Monitores</a> |
+        <a href="/salas/">Salas</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}{% endblock %}
+</body>
+</html>
