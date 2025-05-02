@@ -30,14 +30,11 @@ def detalle_actividad(request, id):
     return render(request, 'actividades/detalle.html', {'actividad': actividad})
 
 def crear_actividad(request):
-    if request.method == 'POST':
-        form = ActividadForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_actividades')
-    else:
-        form = ActividadForm()
-    return render(request, 'actividades/formulario.html', {'form': form})
+    form = ActividadForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, 'actividades/formulario.html', {'formulario': form, 'titulo': 'Registrar Actividad'})
 
 def editar_actividad(request, id):
     actividad = get_object_or_404(Actividad, id=id)
@@ -92,14 +89,11 @@ def detalle_usuario(request, id):
     return render(request, 'usuarios/detalle.html', {'usuario': usuario})
 
 def crear_usuario(request):
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_usuarios')
-    else:
-        form = UsuarioForm()
-    return render(request, 'usuarios/formulario.html', {'form': form})
+    form = UsuarioForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, 'usuarios/formulario.html', {'formulario': form, 'titulo': 'Registrar Usuario'})
 
 def editar_usuario(request, id):
     usuario = get_object_or_404(UsuarioInscrito, id=id)
@@ -128,14 +122,11 @@ def detalle_monitor(request, id):
     return render(request, 'monitores/detalle.html', {'monitor': monitor})
 
 def crear_monitor(request):
-    if request.method == 'POST':
-        form = MonitorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_monitores')
-    else:
-        form = MonitorForm()
-    return render(request, 'monitores/formulario.html', {'form': form})
+    form = MonitorForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, 'monitores/formulario.html', {'formulario': form, 'titulo': 'Registrar Monitor'})
 
 def editar_monitor(request, id):
     monitor = get_object_or_404(Monitor, id=id)
@@ -164,14 +155,11 @@ def detalle_sala(request, id):
     return render(request, 'salas/detalle.html', {'sala': sala})
 
 def crear_sala(request):
-    if request.method == 'POST':
-        form = SalaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_salas')
-    else:
-        form = SalaForm()
-    return render(request, 'salas/formulario.html', {'form': form})
+    form = SalaForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, 'salas/formulario.html', {'formulario': form, 'titulo': 'Registrar Sala'})
 
 def editar_sala(request, id):
     sala = get_object_or_404(Sala, id=id)

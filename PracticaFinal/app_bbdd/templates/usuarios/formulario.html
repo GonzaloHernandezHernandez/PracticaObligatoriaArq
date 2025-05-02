@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ form.instance.id|yesno:"Editar,Crear" }} Actividad</h1>
+<h1>{{titulo}}</h1>
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-</form>
+{% for campo in formulario %}
+  <div>
+    <label for="{{ campo.id_for_label }}">{{ campo.label }}</label><br>
+    {{ campo }}
+    {% if campo.errors %}
+      <div style="color:red">{{ campo.errors }}</div>
+    {% endif %}
+  </div>
+{% endfor %}
+<button type="submit">Enviar</button>
+    </form>
 {% endblock %}
