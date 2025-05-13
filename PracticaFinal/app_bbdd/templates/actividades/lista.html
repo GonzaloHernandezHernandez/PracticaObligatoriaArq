@@ -1,28 +1,69 @@
 {% extends 'base.html' %}
 {% block title %}Actividades{% endblock %}
+
 {% block content %}
-<h1>Listado de Actividades</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Listado de Actividades</h1>
 
-<form method="get">
-    <input type="text" name="tipo" placeholder="Tipo de actividad" value="{{ request.GET.tipo }}">
-    
-    <select name="monitor">
-        <option value="">-- Filtrar por monitor --</option>
-        {% for monitor in monitores %}
-            <option value="{{ monitor.id }}" {% if request.GET.monitor == monitor.id|stringformat:"s" %}selected{% endif %}>
-                {{ monitor.nombre }}
-            </option>
-        {% endfor %}
-    </select>
+    <!-- Filtros de búsqueda -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="tipo" class="form-control" placeholder="Tipo de actividad"
+                   value="{{ request.GET.tipo }}">
+        </div>
+        <div class="col-md-4">
+            <select name="monitor" class="form-select">
+                <option value="">-- Filtrar por monitor --</option>
+                {% for monitor in monitores %}
+                    <option value="{{ monitor.id }}" {% if request.GET.monitor == monitor.id|stringformat:"s" %}selected{% endif %}>
+                        {{ monitor.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{% url 'lista_actividades' %}" class="btn btn-secondary">Limpiar</a>
+        </div>
+    </form>
 
-    <button type="submit">Filtrar</button>
-</form>
+    <!-- Enlace para nueva actividad -->
+    <div class="mb-3">
+        <a href="{% url 'crear_actividad' %}" class="btn btn-success">Crear nueva actividad</a>
+    </div>
 
-<a href="{% url 'crear_actividad' %}">Crear nueva actividad</a>
-
-<ul>
-    {% for actividad in actividades %}
-        <li><a href="{% url 'detalle_actividad' actividad.id %}">{{ actividad.nombre }}</a></li>
-    {% endfor %}
-</ul>
+    <!-- Tabla de actividades -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Monitor</th>
+                <th>Horario</th>
+                <th>Plazas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for actividad in actividades %}
+                <tr>
+                    <td>{{ actividad.nombre }}</td>
+                    <td>{{ actividad.tipo }}</td>
+                    <td>{{ actividad.monitor.nombre }}</td>
+                    <td>{{ actividad.horario }}</td>
+                    <td>{{ actividad.plazas_disponibles }}</td>
+                    <td>
+                        <a href="{% url 'detalle_actividad' actividad.id %}" class="btn btn-sm btn-info">Ver</a>
+                        <a href="{% url 'editar_actividad' actividad.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'eliminar_actividad' actividad.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay actividades que coincidan con el filtro.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

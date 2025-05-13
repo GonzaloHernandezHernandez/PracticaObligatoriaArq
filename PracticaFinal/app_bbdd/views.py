@@ -6,7 +6,7 @@ from .models import Actividad, UsuarioInscrito, Monitor, Sala, ResponsableSala
 from .forms import ActividadForm, UsuarioForm, MonitorForm, SalaForm, ResponsableForm
 
 def inicio(request):
-    return render(request, 'base.html')
+    return render(request, 'inicio.html')
 
 def lista_actividades(request):
     actividades = Actividad.objects.all()
@@ -33,7 +33,7 @@ def crear_actividad(request):
     form = ActividadForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('../')
     return render(request, 'actividades/formulario.html', {'formulario': form, 'titulo': 'Registrar Actividad'})
 
 def editar_actividad(request, id):
@@ -45,7 +45,13 @@ def editar_actividad(request, id):
             return redirect('detalle_actividad', id=actividad.id)
     else:
         form = ActividadForm(instance=actividad)
-    return render(request, 'actividades/formulario.html', {'form': form})
+    
+    context = {
+        'form': form,
+        'titulo': f'Editar: {actividad.nombre}',
+        'actividad': actividad  
+    }
+    return render(request, 'actividades/editar.html', context)
 
 def eliminar_actividad(request, id):
     actividad = get_object_or_404(Actividad, id=id)
@@ -86,13 +92,13 @@ def lista_usuarios(request):
 
 def detalle_usuario(request, id):
     usuario = get_object_or_404(UsuarioInscrito, id=id)
-    return render(request, 'usuarios/detalle.html', {'usuario': usuario})
+    return render(request, 'usuarios/detalle_usuario.html', {'usuario': usuario})
 
 def crear_usuario(request):
     form = UsuarioForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('../')
     return render(request, 'usuarios/formulario.html', {'formulario': form, 'titulo': 'Registrar Usuario'})
 
 def editar_usuario(request, id):
@@ -101,10 +107,16 @@ def editar_usuario(request, id):
         form = UsuarioForm(request.POST, instance=usuario)
         if form.is_valid():
             form.save()
-            return redirect('detalle_usuario', id=id)
+            return redirect('detalle_usuario', id=usuario.id)
     else:
         form = UsuarioForm(instance=usuario)
-    return render(request, 'usuarios/formulario.html', {'form': form})
+    
+    context = {
+        'form': form,
+        'titulo': f'Editar: {usuario.nombre}',
+        'usuario': usuario  
+    }
+    return render(request, 'usuarios/editar.html', context)
 
 def eliminar_usuario(request, id):
     usuario = get_object_or_404(UsuarioInscrito, id=id)
@@ -125,7 +137,7 @@ def crear_monitor(request):
     form = MonitorForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('../')
     return render(request, 'monitores/formulario.html', {'formulario': form, 'titulo': 'Registrar Monitor'})
 
 def editar_monitor(request, id):
@@ -134,11 +146,16 @@ def editar_monitor(request, id):
         form = MonitorForm(request.POST, instance=monitor)
         if form.is_valid():
             form.save()
-            return redirect('detalle_monitor', id=id)
+            return redirect('detalle_monitor', id=monitor.id)
     else:
         form = MonitorForm(instance=monitor)
-    return render(request, 'monitores/formulario.html', {'form': form})
-
+    
+    context = {
+        'form': form,
+        'titulo': f'Editar: {monitor.nombre}',
+        'usuario': monitor  
+    }
+    return render(request, 'monitores/editar.html', context)
 def eliminar_monitor(request, id):
     monitor = get_object_or_404(Monitor, id=id)
     if request.method == 'POST':
@@ -158,7 +175,7 @@ def crear_sala(request):
     form = SalaForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('../')
     return render(request, 'salas/formulario.html', {'formulario': form, 'titulo': 'Registrar Sala'})
 
 def editar_sala(request, id):
@@ -167,10 +184,16 @@ def editar_sala(request, id):
         form = SalaForm(request.POST, instance=sala)
         if form.is_valid():
             form.save()
-            return redirect('detalle_sala', id=id)
+            return redirect('detalle_sala', id=sala.id)
     else:
         form = SalaForm(instance=sala)
-    return render(request, 'salas/formulario.html', {'form': form})
+    
+    context = {
+        'form': form,
+        'titulo': f'Editar: {sala.nombre}',
+        'usuario': sala  
+    }
+    return render(request, 'salas/editar.html', context)
 
 def eliminar_sala(request, id):
     sala = get_object_or_404(Sala, id=id)

@@ -1,12 +1,39 @@
 {% extends 'base.html' %}
+{% block title %}Monitores{% endblock %}
+
 {% block content %}
-<h1>Monitores</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Listado de Monitores</h1>
 
-<a href="{% url 'crear_monitor' %}">Nuevo Monitor</a>
+    <div class="mb-3">
+        <a href="{% url 'crear_monitor' %}" class="btn btn-success">Nuevo Monitor</a>
+    </div>
 
-<ul>
-    {% for monitor in monitores %}
-        <li><a href="{% url 'detalle_monitor' monitor.id %}">{{ monitor.nombre }}</a></li>
-    {% endfor %}
-</ul>
+    <table class="table table-striped table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Especialización</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for monitor in monitores %}
+                <tr>
+                    <td>{{ monitor.nombre }}</td>
+                    <td>{{ monitor.actividad_set.count }}</td>
+                    <td>
+                        <a href="{% url 'detalle_monitor' monitor.id %}" class="btn btn-sm btn-info">Ver</a>
+                        <a href="{% url 'editar_monitor' monitor.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'eliminar_monitor' monitor.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay monitores registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
